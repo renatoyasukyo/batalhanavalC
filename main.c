@@ -1,8 +1,5 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <iostream.h> //para o ascchar funcionar
-
-using namespace std; //para o ascchar funcionar
 
 int opcao_menu();
 void menu();
@@ -72,10 +69,11 @@ int navio_jogador1()
 {
     int matriz[10][10];
     for(int i = 0; i < 10; i++){
-        printf("O");
-        for (int j = 0; j < 10; j++){
-            printf("O");
+        for(int j = 0; j < 10; j++){
+            matriz[i][j] = 0;
+            printf("%d ", matriz[i][j]);
         }
+        printf("\n");
     }
 }
 
@@ -88,7 +86,5 @@ int navio_jogador2()
             printf("%d ", matriz[i][j]);
         }
         printf("\n");
-        printf("%c", ascChar--);
     }
-
 }
