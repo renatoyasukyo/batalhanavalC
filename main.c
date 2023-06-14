@@ -3,9 +3,9 @@
 
 int opcao_menu();
 void menu();
-int alocar_navios();
 int navio_jogador1();
 int navio_jogador2();
+int iniciar_jogo(int matriz_jog1[10][10], matriz_jog2[10][10]);
 void imprimir_matriz(int matriz[10][10]);
 void preencher_intervalo(int matriz[10][10], int linha_inicial, int coluna_inicial, int linha_final, int coluna_final);
 
@@ -30,11 +30,29 @@ void menu()
 int opcao_menu()
 {
     int opc;
+    int jogador;
+    int matriz1[10][10];
+    int matriz2[10][10];
     scanf("%d", &opc);
     switch (opc)
     {
     case 1:
-        alocar_navios();
+        printf("Selecione o jogador para alocar os navios: \n");
+        scanf("%d", &jogador);
+        switch (jogador)
+        {
+            case 1:
+            navio_jogador1(matriz1);
+            menu();
+
+            case 2:
+            navio_jogador2(matriz2);
+            menu();
+
+            default:
+            printf("Jogador invalido\n");
+            opcao_menu();
+        }
         break;
     /*case 2:
         iniciar_jogo();
@@ -47,28 +65,8 @@ int opcao_menu()
     }
 }
 
-int alocar_navios()
+int navio_jogador1(int matriz[10][10])
 {
-    int jogador;
-    printf("Selecione o jogador para alocar os navios: \n");
-    scanf("%d", &jogador);
-    switch (jogador)
-    {
-    case 1:
-        navio_jogador1();
-        menu();
-    case 2:
-        navio_jogador2();
-        menu();
-    default:
-        printf("Jogador invalido\n");
-        alocar_navios();
-    }
-}
-
-int navio_jogador1()
-{
-    int matriz[10][10] = {0};
     int linhaInicial, colunaInicial, linhaFinal, colunaFinal;
 
     printf("Digite as coordenadas, da menor para a maior, do porta-avioes de 4 casas (exemplo: a1 e depois a4):\n");
@@ -344,4 +342,10 @@ void preencher_intervalo(int matriz[10][10], int linha_inicial, int coluna_inici
             matriz[linha][coluna] = 1;
         }
     }
+}
+
+int iniciar_jogo(int matriz_jog1[10][10], matriz_jog2[10][10])
+{
+    imprimir_matriz(matriz_jog1);
+    imprimir_matriz(matriz_jog2);
 }
