@@ -62,11 +62,11 @@ int alocar_navios(int matriz1[10][10], int matriz2[10][10])
     switch (jogador)
     {
     case 1:
-        navio_jogador1(matriz1);
+        navio_jogador(matriz1);
         menu(matriz1, matriz2);
         break;
     case 2:
-        navio_jogador2(matriz2);
+        navio_jogador(matriz2);
         menu(matriz1, matriz2);
         break;
     default:
@@ -76,7 +76,7 @@ int alocar_navios(int matriz1[10][10], int matriz2[10][10])
     return 0;
 }
 
-int navio_jogador1(int matriz[10][10])
+int navio_jogador(int matriz[10][10])
 {
     int linhaInicial, colunaInicial, linhaFinal, colunaFinal;
 
@@ -92,8 +92,10 @@ int navio_jogador1(int matriz[10][10])
         linhaInicial = atoi(coordenadaInicial + 1) - 1;
         linhaFinal = atoi(coordenadaFinal + 1) - 1;
 
-        if ((linhaInicial == linhaFinal && (colunaFinal - colunaInicial == 3)) ||
-            (colunaInicial == colunaFinal && (linhaFinal - linhaInicial == 3)))
+        if (((linhaInicial == linhaFinal && (colunaFinal - colunaInicial == 3)) ||
+            (colunaInicial == colunaFinal && (linhaFinal - linhaInicial == 3))) &&
+            linhaInicial >= 0 && linhaInicial <= 9 && linhaFinal >= 0 && linhaFinal <= 9 &&
+            colunaInicial >= 0 && colunaInicial <= 9 && colunaFinal >= 0 && colunaFinal <= 9)
         {
             preencher_intervalo(matriz, linhaInicial, colunaInicial, linhaFinal, colunaFinal);
             imprimir_matriz(matriz);
@@ -101,7 +103,7 @@ int navio_jogador1(int matriz[10][10])
         }
         else
         {
-            printf("Intervalo inválido. Por favor, digite outro intervalo (exemplo: a1-a4):\n");
+            printf("Intervalo invalido. Por favor, digite outro intervalo:\n");
         }
     } while (1);
 
@@ -119,18 +121,42 @@ int navio_jogador1(int matriz[10][10])
             linhaInicial = atoi(coordenadaInicial + 1) - 1;
             linhaFinal = atoi(coordenadaFinal + 1) - 1;
 
-            if ((linhaInicial == linhaFinal && (colunaFinal - colunaInicial == 2)) ||
-                (colunaInicial == colunaFinal && (linhaFinal - linhaInicial == 2)))
+            if (((linhaInicial == linhaFinal && (colunaFinal - colunaInicial == 2)) ||
+            (colunaInicial == colunaFinal && (linhaFinal - linhaInicial == 2))) &&
+            linhaInicial >= 0 && linhaInicial <= 9 && linhaFinal >= 0 && linhaFinal <= 9 &&
+            colunaInicial >= 0 && colunaInicial <= 9 && colunaFinal >= 0 && colunaFinal <= 9)
+            {
+            int posicaoInvalida = 0;
+            for (int linha = linhaInicial; linha <= linhaFinal; linha++)
+            {
+                for (int coluna = colunaInicial; coluna <= colunaFinal; coluna++)
+                {
+                    if (matriz[linha][coluna] == 2)
+                    {
+                        posicaoInvalida = 1;
+                        break;
+                    }
+                }
+                if (posicaoInvalida)
+                    break;
+            }
+
+            if (posicaoInvalida)
+            {
+                printf("Ja existe um navio nessa posicao. Por favor, digite outro intervalo :\n");
+            }
+            else
             {
                 preencher_intervalo(matriz, linhaInicial, colunaInicial, linhaFinal, colunaFinal);
                 imprimir_matriz(matriz);
                 break;
             }
-            else
-            {
-                printf("Intervalo inválido. Por favor, digite outro intervalo (exemplo: b1-b3):\n");
             }
-        } while (1);
+        else
+        {
+            printf("Intervalo invalido. Por favor, digite outro intervalo:\n");
+        }
+    } while (1);
     }
 
     for (int i = 0; i < 3; i++)
@@ -147,18 +173,42 @@ int navio_jogador1(int matriz[10][10])
             linhaInicial = atoi(coordenadaInicial + 1) - 1;
             linhaFinal = atoi(coordenadaFinal + 1) - 1;
 
-            if ((linhaInicial == linhaFinal && (colunaFinal - colunaInicial == 1)) ||
-                (colunaInicial == colunaFinal && (linhaFinal - linhaInicial == 1)))
+            if (((linhaInicial == linhaFinal && (colunaFinal - colunaInicial == 1)) ||
+            (colunaInicial == colunaFinal && (linhaFinal - linhaInicial == 1))) &&
+            linhaInicial >= 0 && linhaInicial <= 9 && linhaFinal >= 0 && linhaFinal <= 9 &&
+            colunaInicial >= 0 && colunaInicial <= 9 && colunaFinal >= 0 && colunaFinal <= 9)
+            {
+            int posicaoInvalida = 0;
+            for (int linha = linhaInicial; linha <= linhaFinal; linha++)
+            {
+                for (int coluna = colunaInicial; coluna <= colunaFinal; coluna++)
+                {
+                    if (matriz[linha][coluna] == 2)
+                    {
+                        posicaoInvalida = 1;
+                        break;
+                    }
+                }
+                if (posicaoInvalida)
+                    break;
+            }
+
+            if (posicaoInvalida)
+            {
+                printf("Ja existe um navio nessa posicao. Por favor, digite outro intervalo:\n");
+            }
+            else
             {
                 preencher_intervalo(matriz, linhaInicial, colunaInicial, linhaFinal, colunaFinal);
                 imprimir_matriz(matriz);
                 break;
             }
-            else
-            {
-                printf("Intervalo inválido. Por favor, digite outro intervalo (exemplo: c1-c2):\n");
             }
-        } while (1);
+        else
+        {
+            printf("Intervalo invalido. Por favor, digite outro intervalo:\n");
+        }
+    } while (1);
     }
 
     for (int i = 0; i < 4; i++)
@@ -174,129 +224,26 @@ int navio_jogador1(int matriz[10][10])
 
             if (linhaFinal >= 0 && linhaFinal < 10 && colunaFinal >= 0 && colunaFinal < 10)
             {
+                if (matriz[linhaFinal][colunaFinal] == 2)
+            {
+                printf("Ja existe um navio nessa posicao. Por favor, digite outra coordenada:\n");
+            }
+            else
+            {
                 matriz[linhaFinal][colunaFinal] = 2;
                 imprimir_matriz(matriz);
                 break;
             }
-            else
-            {
-                printf("Coordenada inválida. Por favor, digite outra coordenada (exemplo: a1):\n");
-            }
-        } while (1);
-    }
-    return 0;
-}
-
-int navio_jogador2(int matriz[10][10])
-{
-    int linhaInicial, colunaInicial, linhaFinal, colunaFinal;
-
-    printf("Digite as coordenadas, da menor para a maior, do porta-avioes de 4 casas (exemplo: a1 e depois a4):\n");
-    do
-    {
-        char coordenadaInicial[4], coordenadaFinal[4]; // Aumentando o tamanho dos arrays para 4 caracteres
-        scanf("%3s %3s", coordenadaInicial, coordenadaFinal); // Limitando a leitura a no máximo 3 caracteres
-
-        colunaInicial = coordenadaInicial[0] - 'a';
-        colunaFinal = coordenadaFinal[0] - 'a';
-
-        linhaInicial = atoi(coordenadaInicial + 1) - 1;
-        linhaFinal = atoi(coordenadaFinal + 1) - 1;
-
-        if ((linhaInicial == linhaFinal && (colunaFinal - colunaInicial == 3)) ||
-            (colunaInicial == colunaFinal && (linhaFinal - linhaInicial == 3)))
-        {
-            preencher_intervalo(matriz, linhaInicial, colunaInicial, linhaFinal, colunaFinal);
-            imprimir_matriz(matriz);
-            break;
         }
         else
         {
-            printf("Intervalo inválido. Por favor, digite outro intervalo (exemplo: a1-a4):\n");
+            printf("Coordenada invalida. Por favor, digite outra coordenada:\n");
         }
-    } while (1);
-
-    for (int i = 0; i < 2; i++)
-    {
-        printf("Digite as coordenadas, da menor para a maior, do navio-tanque de 3 casas (exemplo: b1 e depois b3):\n");
-        do
-        {
-            char coordenadaInicial[4], coordenadaFinal[4]; // Aumentando o tamanho dos arrays para 4 caracteres
-            scanf("%3s %3s", coordenadaInicial, coordenadaFinal); // Limitando a leitura a no máximo 3 caracteres
-
-            colunaInicial = coordenadaInicial[0] - 'a';
-            colunaFinal = coordenadaFinal[0] - 'a';
-
-            linhaInicial = atoi(coordenadaInicial + 1) - 1;
-            linhaFinal = atoi(coordenadaFinal + 1) - 1;
-
-            if ((linhaInicial == linhaFinal && (colunaFinal - colunaInicial == 2)) ||
-                (colunaInicial == colunaFinal && (linhaFinal - linhaInicial == 2)))
-            {
-                preencher_intervalo(matriz, linhaInicial, colunaInicial, linhaFinal, colunaFinal);
-                imprimir_matriz(matriz);
-                break;
-            }
-            else
-            {
-                printf("Intervalo inválido. Por favor, digite outro intervalo (exemplo: b1-b3):\n");
-            }
-        } while (1);
-    }
-
-    for (int i = 0; i < 3; i++)
-    {
-        printf("Digite as coordenadas, da menor para a maior, do contratorpedeiro de 2 casas (exemplo: c1 e depois c2):\n");
-        do
-        {
-            char coordenadaInicial[4], coordenadaFinal[4]; // Aumentando o tamanho dos arrays para 4 caracteres
-            scanf("%3s %3s", coordenadaInicial, coordenadaFinal); // Limitando a leitura a no máximo 3 caracteres
-
-            colunaInicial = coordenadaInicial[0] - 'a';
-            colunaFinal = coordenadaFinal[0] - 'a';
-
-            linhaInicial = atoi(coordenadaInicial + 1) - 1;
-            linhaFinal = atoi(coordenadaFinal + 1) - 1;
-
-            if ((linhaInicial == linhaFinal && (colunaFinal - colunaInicial == 1)) ||
-                (colunaInicial == colunaFinal && (linhaFinal - linhaInicial == 1)))
-            {
-                preencher_intervalo(matriz, linhaInicial, colunaInicial, linhaFinal, colunaFinal);
-                imprimir_matriz(matriz);
-                break;
-            }
-            else
-            {
-                printf("Intervalo inválido. Por favor, digite outro intervalo (exemplo: c1-c2):\n");
-            }
-        } while (1);
-    }
-
-    for (int i = 0; i < 4; i++)
-    {
-        printf("Digite as coordenadas do submarino de 1 casa (exemplo: d1):\n");
-        do
-        {
-            char coordenada[4];
-            scanf("%3s", coordenada);
-
-            linhaFinal = atoi(coordenada + 1) - 1;
-            colunaFinal = coordenada[0] - 'a';
-
-            if (linhaFinal >= 0 && linhaFinal < 10 && colunaFinal >= 0 && colunaFinal < 10)
-            {
-                matriz[linhaFinal][colunaFinal] = 2;
-                imprimir_matriz(matriz);
-                break;
-            }
-            else
-            {
-                printf("Coordenada inválida. Por favor, digite outra coordenada (exemplo: a1):\n");
-            }
         } while (1);
     }
     return 0;
 }
+
 
 void imprimir_matriz(int matriz[10][10])
 {
@@ -331,6 +278,7 @@ void preencher_intervalo(int matriz[10][10], int linha_inicial, int coluna_inici
         }
     }
 }
+
 
 int iniciar_jogo(int matriz1[10][10], int matriz2[10][10])
 {
