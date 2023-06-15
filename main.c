@@ -4,8 +4,7 @@
 
 int menu(int matriz1[10][10], int matriz2[10][10]);
 int alocar_navios(int matriz1[10][10], int matriz2[10][10]);
-int navio_jogador1(int matriz[10][10]);
-int navio_jogador2(int matriz[10][10]);
+int navio_jogador(int matriz[10][10]);
 int ataque_jogador1(int matriz[10][10], int matriz_ataque[10][10], int *ponto1);
 int ataque_jogador2(int matriz[10][10], int matriz_ataque[10][10], int *ponto2);
 int iniciar_jogo(int matriz1[10][10], int matriz2[10][10]);
